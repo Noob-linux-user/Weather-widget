@@ -1,13 +1,54 @@
-## A Series of web widget made by me, so that some boogers can't charge money for simple notion widget
-- I was Frustrated with all the notion widget website Asking money for auto dark and light theme. I am no web developer. I learned this and that as my hobby, and using it here.
-- The animated icon are from this link [amCharts]<https://www.amcharts.com/free-animated-svg-weather-icons/>
-- this is what thier license says-
-''''The works contained in this archive were created by amCharts (https://www.amcharts.com/)
-and is licensed under Creative Commons Attribution 4.0 International Public License:
+# Notion Weather Widget
 
-https://creativecommons.org/licenses/by/4.0/
+A series of web widgets made by me, so that some boogers can't charge money for simple notion widgets.
 
-If in doubt, email amCharts at contact@amcharts.com ''''
+## Motivation
 
-- Just give this repo a star.
-- I have other notion widgets so check them out too
+- I was Frustrated with all the notion widget website Asking money for auto dark and light theme. I am no web developer. I learned this and that as my hobby, and using it here. Enjoy karo bc
+
+
+## Features
+
+✨ **Auto Dark/Light Theme** - Automatically adapts to system preference  
+🌍 **Real Weather Data** - Powered by Open-Meteo API (free, no API key needed)  
+📍 **Location Search** - Search any city worldwide  
+🎨 **Beautiful Design** - Notion-style interface  
+📱 **Responsive** - Works on desktop, tablet, and mobile  
+🚀 **GitHub Pages Ready** - Host for free on GitHub Pages  
+
+## How to use:
+1. Notion → `+` → **Embed**
+2. Paste: `https://noob-linux-user.github.io/Weather-widget/`
+3. Done! ✨
+
+## Credits
+
+The animated icons are from **amCharts**:
+- Source: [amCharts Free Animated SVG Weather Icons](https://www.amcharts.com/free-animated-svg-weather-icons/)
+- License: Creative Commons Attribution 4.0 International
+
+- 
+- 🎨 Weather Icons: [amCharts](https://www.amcharts.com/)
+- 🌍 Weather Data: [Open-Meteo](https://open-meteo.com/)
+- 🗺️ Maps: [OpenStreetMap](https://www.openstreetmap.org/)
+
+
+## Other Notion Widgets
+
+Check out my other Notion widgets:
+- [Pomodaro-timer](https://noob-linux-user.github.io/Pomodaro-timer/)
+- [Timer Widget](https://noob-linux-user.github.io/Flipflop-clock/)
+- [Todo Widget](https://noob-linux-user.github.io/Progress-bar/)
+
+## Contributing
+
+Found a bug? Have a suggestion? Open an issue or pull request!
+
+## Star This Repository ⭐
+
+If you find this useful, please give this repo a star! It means a lot and helps others discover the widget.
+
+--
+
+Made with ❤️ by someone tired of paying for simple widgets
+

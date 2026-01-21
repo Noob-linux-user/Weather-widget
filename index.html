@@ -1,35 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Widget</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Light Mode */
+            /* Light Mode - Notion Style */
             --color-bg: transparent;
-            --color-surface: #f8f8f8;
+            --color-surface: #ffffff;
             --color-text: #37352f;
             --color-text-secondary: #626060;
             --color-border: #e5e5e5;
             --color-accent: #0084ff;
-            --color-hover: #f0f0f0;
+            --color-hover: #f8f8f8;
         }
 
         [data-theme="dark"] {
+            /* Dark Mode - Notion Style */
             --color-bg: transparent;
-            --color-surface: #1f1f23;
-            --color-text: #f5f5f5;
-            --color-text-secondary: #b4b4b4;
-            --color-border: #2f2f35;
+            --color-surface: #2a2a2a;
+            --color-text: #e0e0e0;
+            --color-text-secondary: #9a9a9a;
+            --color-border: #3d3d3d;
             --color-accent: #2898ff;
-            --color-hover: #28282f;
+            --color-hover: #363636;
         }
 
         * {
@@ -52,13 +50,12 @@
         .container {
             width: 100%;
             max-width: 780px;
-            /* longer sideways */
         }
 
         .weather-widget {
             background: var(--color-surface);
             border-radius: 14px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
             border: 1px solid var(--color-border);
             overflow: hidden;
             animation: slideIn 0.4s ease-out;
@@ -69,7 +66,6 @@
                 opacity: 0;
                 transform: translateY(14px);
             }
-
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -80,8 +76,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 18px;
-            background: rgba(0, 0, 0, 0.04);
+            padding: 12px 18px;
+            background: var(--color-surface);
             border-bottom: 1px solid var(--color-border);
         }
 
@@ -248,7 +244,15 @@
         }
 
         .weather-icon {
-            font-size: 52px;
+            font-family: 'Material Symbols Outlined';
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            font-size: 52px !important;
+            color: var(--color-text);
+        }
+
+        [data-theme="dark"] .weather-icon {
+            color: #ffffff !important;
+            filter: brightness(1.1) drop-shadow(0 1px 2px rgba(0,0,0,0.3));
         }
 
         .today-temp-block {
@@ -285,6 +289,12 @@
             border: 1px solid var(--color-border);
             padding: 10px 6px;
             text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .forecast-card:hover {
+            background: var(--color-border);
+            transform: translateY(-2px);
         }
 
         .forecast-day {
@@ -295,8 +305,16 @@
         }
 
         .forecast-icon {
-            font-size: 22px;
+            font-family: 'Material Symbols Outlined';
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 20;
+            font-size: 22px !important;
+            color: var(--color-text);
             margin-bottom: 4px;
+        }
+
+        [data-theme="dark"] .forecast-icon {
+            color: #ffffff !important;
+            filter: brightness(1.1) drop-shadow(0 1px 2px rgba(0,0,0,0.3));
         }
 
         .forecast-high {
@@ -315,6 +333,7 @@
             text-align: center;
             padding: 40px 20px;
             color: var(--color-text-secondary);
+            background: var(--color-surface);
         }
 
         .error {
@@ -347,33 +366,15 @@
             .right-forecast {
                 justify-content: flex-start;
                 overflow-x: auto;
+                padding-bottom: 8px;
             }
 
             .forecast-card {
                 min-width: 70px;
             }
         }
-
-        .weather-icon {
-            font-family: 'Material Symbols Outlined';
-            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
-            font-size: 52px !important;
-        }
-
-        .forecast-icon {
-            font-family: 'Material Symbols Outlined';
-            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 20;
-            font-size: 22px !important;
-        }
-        [data-theme="dark"] .weather-icon,
-[data-theme="dark"] .forecast-icon {
-    color: #ffffff !important;
-    filter: brightness(1.1) drop-shadow(0 1px 2px rgba(0,0,0,0.3));
-}
     </style>
-
 </head>
-
 <body>
     <div class="container">
         <div class="weather-widget">
@@ -409,17 +410,33 @@
     </div>
 
     <script>
-        // Weather icons mapping
+        // Weather icons mapping (Material Symbols)
         const weatherIcons = {
-            0: 'light_mode', 1: 'partly_cloudy_day', 2: 'partly_cloudy_day', 3: 'cloudy',
-            45: 'visibility', 48: 'visibility', 51: 'humidity_mid', 53: 'humidity_mid', 55: 'humidity_high',
-            61: 'water_drop', 63: 'water_drop', 65: 'water_drop',
-            71: 'ac_unit', 73: 'ac_unit', 75: 'ac_unit', 77: 'ac_unit',
-            80: 'water_drop', 81: 'water_drop', 82: 'bolt',
-            85: 'ac_unit', 86: 'ac_unit',
-            95: 'bolt', 96: 'bolt', 99: 'bolt'
+            0: 'light_mode',
+            1: 'partly_cloudy_day',
+            2: 'partly_cloudy_day',
+            3: 'cloudy',
+            45: 'visibility',
+            48: 'visibility',
+            51: 'humidity_mid',
+            53: 'humidity_mid',
+            55: 'humidity_high',
+            61: 'water_drop',
+            63: 'water_drop',
+            65: 'water_drop',
+            71: 'ac_unit',
+            73: 'ac_unit',
+            75: 'ac_unit',
+            77: 'ac_unit',
+            80: 'water_drop',
+            81: 'water_drop',
+            82: 'bolt',
+            85: 'ac_unit',
+            86: 'ac_unit',
+            95: 'bolt',
+            96: 'bolt',
+            99: 'bolt'
         };
-
 
         const weatherDescriptions = {
             0: 'Clear sky',
@@ -448,11 +465,11 @@
             99: 'Thunderstorm with heavy hail'
         };
 
-        let currentCoords = { lat: 26.1603, lon: 94.2037 };
-let savedLocation = localStorage.getItem('savedLocation'); // Add this line
-if (savedLocation) {
-    currentCoords = JSON.parse(savedLocation);
-}; // Default: Assam, India
+        let currentCoords = { lat: 26.1603, lon: 94.2037 }; // Default: Assam, India
+        let savedLocation = localStorage.getItem('savedLocation');
+        if (savedLocation) {
+            currentCoords = JSON.parse(savedLocation);
+        }
 
         async function getWeather(lat, lon) {
             try {
@@ -462,9 +479,8 @@ if (savedLocation) {
                 if (!response.ok) throw new Error('Weather data unavailable');
                 const data = await response.json();
                 currentCoords = { lat, lon };
-                displayWeather(data);
                 localStorage.setItem('savedLocation', JSON.stringify(currentCoords));
-
+                displayWeather(data);
             } catch (error) {
                 console.error('Weather fetch error:', error);
                 document.getElementById('weatherContent').innerHTML =
@@ -498,8 +514,6 @@ if (savedLocation) {
 
                 const result = data.results[0];
                 getWeather(result.latitude, result.longitude);
-                localStorage.setItem('savedLocation', JSON.stringify({ lat: result.latitude, lon: result.longitude }));
-
             } catch (error) {
                 console.error('Search error:', error);
                 alert('Error searching for city. Check console.');
@@ -537,27 +551,22 @@ if (savedLocation) {
                 timeZone: timezone
             });
 
-            const weatherIcon = weatherIcons[current.weather_code] || '🌡️';
-            const description = weatherDescriptions[current.weather_code] || 'Unknown';
-
-            // Build main layout: today left, next 5 days right
             let html = `
                 <div class="weather-layout">
                     <div class="today-panel">
                         <div class="location-name" id="locationName">Location</div>
                         <div class="current-date">${formatter.format(now)}</div>
                         <div class="today-main">
-                           <div class="weather-icon">${weatherIcons[current.weather_code] || 'cloud'}</div>
+                            <div class="weather-icon">${weatherIcons[current.weather_code] || 'cloud'}</div>
                             <div class="today-temp-block">
                                 <div class="temperature">${Math.round(current.temperature_2m)}°C</div>
-                                <div class="weather-description">${description}</div>
+                                <div class="weather-description">${weatherDescriptions[current.weather_code] || 'Unknown'}</div>
                             </div>
                         </div>
                     </div>
                     <div class="right-forecast">
             `;
 
-            // Only next 5 days (skip index 0 if you want "today" excluded)
             const daysToShow = 5;
             for (let i = 0; i < daysToShow; i++) {
                 const date = new Date(daily.time[i]);
@@ -565,14 +574,13 @@ if (savedLocation) {
                     weekday: 'short',
                     timeZone: timezone
                 });
-                const icon = weatherIcons[daily.weather_code[i]] || '🌡️';
                 const maxTemp = Math.round(daily.temperature_2m_max[i]);
                 const minTemp = Math.round(daily.temperature_2m_min[i]);
 
                 html += `
                     <div class="forecast-card">
                         <div class="forecast-day">${dayName}</div>
-<div class="forecast-icon">${weatherIcons[daily.weather_code[i]] || 'cloud'}</div>
+                        <div class="forecast-icon">${weatherIcons[daily.weather_code[i]] || 'cloud'}</div>
                         <div class="forecast-high">${maxTemp}°</div>
                         <div class="forecast-low">${minTemp}°</div>
                     </div>
@@ -631,16 +639,16 @@ if (savedLocation) {
             searchSection.classList.toggle('active');
         }
 
-   window.addEventListener('load', () => {
-    // Auto detect system theme + fallback to saved
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const savedTheme = localStorage.getItem('theme') || (prefersDark ? 'dark' : 'light');
-    
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    updateThemeButton();
-    getWeather(currentCoords.lat, currentCoords.lon);
-});
-
+        // Load on page load
+        window.addEventListener('load', () => {
+            // Auto detect system theme + fallback to saved
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const savedTheme = localStorage.getItem('theme') || (prefersDark ? 'dark' : 'light');
+            
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            updateThemeButton();
+            getWeather(currentCoords.lat, currentCoords.lon);
+        });
 
         document.addEventListener('DOMContentLoaded', () => {
             const input = document.getElementById('cityInput');
@@ -648,15 +656,14 @@ if (savedLocation) {
                 if (e.key === 'Enter') searchWeather();
             });
         });
-        // Auto-update theme when system changes
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-    if (!localStorage.getItem('theme')) {
-        document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
-        updateThemeButton();
-    }
-});
 
+        // Auto-update theme when system changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            if (!localStorage.getItem('theme')) {
+                document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+                updateThemeButton();
+            }
+        });
     </script>
 </body>
-
 </html>

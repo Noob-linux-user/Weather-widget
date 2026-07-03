@@ -7,7 +7,6 @@
     <style>
         :root {
             /* Light Mode */
-            --color-bg: #ffffff; /* Matches Notion Light Mode */
             --color-surface: #f1f1f1;
             --color-text: #37352f;
             --color-text-secondary: #626060;
@@ -19,7 +18,6 @@
 
         [data-theme="dark"] {
             /* Dark Mode */
-            --color-bg: #191919; /* Matches Notion Dark Mode */
             --color-surface: #202020;
             --color-text: #e0e0e0;
             --color-text-secondary: #9a9a9a;
@@ -37,13 +35,13 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--color-bg);
+            background: transparent; /* Baseline transparent, JS will override */
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
-            transition: background 0.3s ease, color 0.3s ease;
+            transition: color 0.3s ease;
         }
 
         .container {
@@ -642,6 +640,10 @@
             html.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
             updateThemeButton();
+            // Force Notion fix script to trigger on manual toggle
+            if (typeof setBodyBackground === 'function') {
+                setBodyBackground();
+            }
         }
 
         function updateThemeButton() {
@@ -684,6 +686,27 @@
                 updateThemeButton();
             }
         });
+
+        // --- Notion Background Fix Script ---
+        (function(){
+            window.setBodyBackground = function() {
+                try {
+                    // Check if the user manually toggled the widget theme first
+                    const currentTheme = document.documentElement.getAttribute('data-theme');
+                    const isDark = currentTheme === 'dark' || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+                    
+                    document.body.style.background = isDark ? '#191919' : '#ffffff';
+                    document.body.style.transition = 'background 0.3s ease';
+                } catch(e) {
+                    document.body.style.background = '#ffffff';
+                }
+            };
+
+            if(window.matchMedia){
+                window.matchMedia('(prefers-color-scheme: dark)').addListener(setBodyBackground);
+            }
+            setBodyBackground();
+        })();
     </script>
 </body>
 </html>

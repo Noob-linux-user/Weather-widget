@@ -7,24 +7,26 @@
     <style>
         :root {
             /* Light Mode */
-            --color-bg: transparent;
+            --color-bg: #ffffff; /* Matches Notion Light Mode */
             --color-surface: #f1f1f1;
             --color-text: #37352f;
             --color-text-secondary: #626060;
             --color-border: #e5e5e5;
             --color-accent: #0084ff;
             --color-hover: #f8f8f8;
+            color-scheme: light;
         }
 
         [data-theme="dark"] {
-            /* Dark Mode - Notion Style yeah notion style */
-            --color-bg: transparent;
-            --color-surface: #1e1e1e;
+            /* Dark Mode */
+            --color-bg: #191919; /* Matches Notion Dark Mode */
+            --color-surface: #202020;
             --color-text: #e0e0e0;
             --color-text-secondary: #9a9a9a;
             --color-border: #3d3d3d;
             --color-accent: #2898ff;
             --color-hover: #2a2a2a;
+            color-scheme: dark;
         }
 
         * {
@@ -207,14 +209,16 @@
         .weather-layout {
             display: flex;
             padding: 18px;
-            gap: 20px;
+            gap: 24px;
             background: var(--color-surface);
         }
 
+        /* FIXED LEFT PANEL WIDTH */
         .today-panel {
-            flex: 0 0 45%;
+            flex: 0 1 auto;
+            min-width: 200px;
             border-right: 1px solid var(--color-border);
-            padding-right: 16px;
+            padding-right: 24px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -271,12 +275,13 @@
             text-transform: capitalize;
         }
 
+        /* FIXED RIGHT PANEL WIDTH */
         .right-forecast {
             flex: 1;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 10px;
+            gap: 12px;
         }
 
         .forecast-card {
@@ -357,6 +362,7 @@
 
             .today-panel {
                 flex: 1;
+                min-width: auto;
                 border-right: none;
                 border-bottom: 1px solid var(--color-border);
                 padding-right: 0;
@@ -410,32 +416,31 @@
     </div>
 
     <script>
-        // Weather code to SVG filename mapping
         const weatherSvgMap = {
-            0: 'day.svg',              // Clear sky
-            1: 'cloudy-day-1.svg',     // Mainly clear
-            2: 'cloudy-day-2.svg',     // Partly cloudy
-            3: 'cloudy.svg',           // Overcast
-            45: 'cloudy.svg',          // Foggy
-            48: 'cloudy.svg',          // Depositing rime fog
-            51: 'cloudy-day-1.svg',    // Light drizzle
-            53: 'cloudy-day-1.svg',    // Moderate drizzle
-            55: 'cloudy-day-1.svg',    // Dense drizzle
-            61: 'rainy-1.svg',         // Slight rain
-            63: 'rainy-2.svg',         // Moderate rain
-            65: 'rainy-3.svg',         // Heavy rain
-            71: 'snowy-1.svg',         // Slight snow
-            73: 'snowy-3.svg',         // Moderate snow
-            75: 'snowy-5.svg',         // Heavy snow
-            77: 'snowy-2.svg',         // Snow grains
-            80: 'rainy-1.svg',         // Slight rain showers
-            81: 'rainy-3.svg',         // Moderate rain showers
-            82: 'thunder.svg',         // Violent rain showers
-            85: 'snowy-2.svg',         // Slight snow showers
-            86: 'snowy-4.svg',         // Heavy snow showers
-            95: 'thunder.svg',         // Thunderstorm
-            96: 'thunder.svg',         // Thunderstorm with slight hail
-            99: 'thunder.svg'          // Thunderstorm with heavy hail
+            0: 'day.svg',              
+            1: 'cloudy-day-1.svg',     
+            2: 'cloudy-day-2.svg',     
+            3: 'cloudy.svg',           
+            45: 'cloudy.svg',          
+            48: 'cloudy.svg',          
+            51: 'cloudy-day-1.svg',    
+            53: 'cloudy-day-1.svg',    
+            55: 'cloudy-day-1.svg',    
+            61: 'rainy-1.svg',         
+            63: 'rainy-2.svg',         
+            65: 'rainy-3.svg',         
+            71: 'snowy-1.svg',         
+            73: 'snowy-3.svg',         
+            75: 'snowy-5.svg',         
+            77: 'snowy-2.svg',         
+            80: 'rainy-1.svg',         
+            81: 'rainy-3.svg',         
+            82: 'thunder.svg',         
+            85: 'snowy-2.svg',         
+            86: 'snowy-4.svg',         
+            95: 'thunder.svg',         
+            96: 'thunder.svg',         
+            99: 'thunder.svg'          
         };
 
         const weatherDescriptions = {
@@ -465,7 +470,6 @@
             99: 'Thunderstorm with heavy hail'
         };
 
-        // SVG icons base URL
         const SVG_BASE_URL = './svg/';
 
         let currentCoords = { lat: 26.1603, lon: 94.2037 };
@@ -609,7 +613,6 @@
 
             document.getElementById('weatherContent').innerHTML = html;
 
-            // Reverse geocode for location name
             fetch(
                 `https://nominatim.openstreetmap.org/reverse?format=json&lat=${currentCoords.lat}&lon=${currentCoords.lon}`
             )
@@ -654,13 +657,10 @@
             searchSection.classList.toggle('active');
         }
 
-        // Initialize on load
         window.addEventListener('load', () => {
-            // Detect system theme preference
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             const savedTheme = localStorage.getItem('theme');
             
-            // Use saved theme if available, otherwise use system preference
             const themeToUse = savedTheme || (prefersDark ? 'dark' : 'light');
             
             document.documentElement.setAttribute('data-theme', themeToUse);
@@ -677,9 +677,7 @@
             }
         });
 
-        // Listen for system theme changes
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-            // Only auto-update if user hasn't manually set a theme
             if (!localStorage.getItem('theme')) {
                 const newTheme = e.matches ? 'dark' : 'light';
                 document.documentElement.setAttribute('data-theme', newTheme);
